@@ -173,6 +173,21 @@ fieldsetActivities.addEventListener('change', (e) => {
   }  
 })
 
+//Listens for checked activities and blocks out other activities if day-and-time attributes are the same(and not itself, of course) by iteration. 
+fieldsetActivities.addEventListener('input', (e) =>{
+  for (i = 0; i <= activity.length; i++) {
+    
+    if (e.target.checked === true && e.target.dataset.dayAndTime === activity[i].dataset.dayAndTime && e.target.name !== activity[i].name) {
+      activity[i].disabled = true; 
+      activity[i].parentNode.style.color = 'grey'; 
+    } else if (e.target.checked === false && e.target.dataset.dayAndTime === activity[i].dataset.dayAndTime) { 
+      activity[i].disabled = false; 
+      activity[i].parentNode.style.color = 'black'; 
+    }
+  }
+})
+
+
 //listens for selected payment option and dynamically generates content.
 selectPayment.addEventListener('change', (e) => {
 if (e.target.value == 'paypal') {
@@ -250,20 +265,7 @@ function validEmail(validator) {
 }
 
 function validActivity() {
-    //Listens for checked activities and blocks out other activities if day-and-time attributes are the same(and not itself, of course) by iteration. 
-  fieldsetActivities.addEventListener('input', (e) =>{
-    for (i = 0; i <activity.length; i++) {
-      
-      if (e.target.checked === true && e.target.dataset.dayAndTime === activity[i].dataset.dayAndTime && e.target.name !== activity[i].name) {
-        activity[i].disabled = true; 
-        activity[i].parentNode.style.color = 'grey'; 
-      } else if (e.target.checked === false && e.target.dataset.dayAndTime === activity[i].dataset.dayAndTime) { 
-        activity[i].disabled = false; 
-        activity[i].parentNode.style.color = 'black'; 
-      }
-    }
-  })
-  //if no activities are checked, it returns false and show and error message
+    //if no activities are checked, it returns false and show and error message
   const activityChecked = document.querySelectorAll(" [type='checkbox']:checked" ); // check for 
     if (activityChecked.length == 0) { 
       noActivity.style.display = 'block';
